@@ -1,0 +1,12 @@
+import boto3
+
+# Fetch latest script from S3
+s3 = boto3.client('s3')
+bucket_name = 'your-s3-bucket'
+script_key = 'path/to/your-script.py'
+
+# Download the script
+s3.download_file(bucket_name, script_key, '/tmp/your-script.py')
+
+# Execute the script
+exec(open('/tmp/your-script.py').read())
