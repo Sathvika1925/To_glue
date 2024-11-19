@@ -1,0 +1,17 @@
+import boto3
+
+s3 = boto3.client('s3')
+bucket_name = 'your-s3-bucket'
+script_key = 'path/to/lambda_script.zip'
+
+lambda_client = boto3.client('lambda')
+function_name = 'your-lambda-function'
+
+# Download and update Lambda
+s3.download_file(bucket_name, script_key, '/tmp/lambda_script.zip')
+
+with open('/tmp/lambda_script.zip', 'rb') as f:
+    lambda_client.update_function_code(
+        FunctionName=function_name,
+        ZipFile=f.read()
+    )
